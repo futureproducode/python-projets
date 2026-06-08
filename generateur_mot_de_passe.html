@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Générateur de mot de passe by Kenz</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#fce4f3;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Nunito',sans-serif;}
+.kawaii{background:#fdf0f8;border-radius:24px;border:2px solid #f0a8d0;padding:2rem;width:460px;color:#7b2d6e;}
+.header{text-align:center;margin-bottom:1.5rem;}
+.stars{color:#e891c8;font-size:18px;letter-spacing:4px;margin-bottom:4px;}
+.title{font-family:'Fredoka One',sans-serif;font-size:1.5rem;color:#c44d9a;letter-spacing:1px;line-height:1.3;}
+.subtitle{font-size:11px;color:#d980b8;letter-spacing:2px;margin-top:4px;}
+.pw-display{background:#fff0fa;border:2px solid #f0a8d0;border-radius:16px;padding:1rem 1.2rem;margin-bottom:1.2rem;min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.pw-text{font-family:'Nunito',sans-serif;font-size:1rem;color:#a0307a;word-break:break-all;flex:1;font-weight:700;letter-spacing:2px;}
+.pw-text.flash{animation:pop .2s ease;}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+.copy-btn{background:#f472b6;border:none;color:#fff;padding:8px 14px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;border-radius:20px;white-space:nowrap;transition:all .15s;}
+.copy-btn:hover{background:#ec4899;transform:scale(1.05);}
+.copy-btn.copied{background:#a855f7;}
+.section{margin-bottom:1rem;}
+.label{font-size:11px;color:#c44d9a;letter-spacing:1px;margin-bottom:6px;font-weight:700;text-transform:uppercase;}
+.slider-row{display:flex;align-items:center;gap:10px;}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:6px;background:#f9d0ea;border-radius:10px;outline:none;border:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:#f472b6;border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px #f472b655;}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem;}
+.opt-btn{background:#fff0fa;border:2px solid #f9d0ea;color:#c44d9a;padding:10px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;border-radius:14px;display:flex;align-items:center;gap:8px;transition:all .15s;text-align:left;}
+.opt-btn.active{background:#fce7f3;border-color:#f472b6;color:#a0307a;}
+.opt-btn:hover{transform:translateY(-1px);}
+.chk{width:16px;height:16px;border:2px solid #f0a8d0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;background:#fff;transition:all .15s;}
+.opt-btn.active .chk{background:#f472b6;border-color:#f472b6;color:#fff;}
+.strength-bar-bg{background:#fce7f3;border-radius:10px;height:10px;overflow:hidden;margin-bottom:6px;}
+.strength-bar{height:100%;border-radius:10px;transition:width .4s ease,background .4s ease;width:0%;}
+.strength-info{display:flex;justify-content:space-between;margin-bottom:1.2rem;font-size:11px;font-weight:700;}
+.warn{color:#e879a0;font-size:11px;margin-bottom:8px;font-weight:700;display:none;}
+.gen-btn{width:100%;background:#f472b6;border:none;color:#fff;padding:14px;cursor:pointer;font-family:'Fredoka One',sans-serif;font-size:16px;letter-spacing:2px;border-radius:20px;transition:all .2s;box-shadow:0 4px 14px #f472b644;}
+.gen-btn:hover{background:#ec4899;transform:translateY(-2px);box-shadow:0 6px 20px #f472b666;}
+.gen-btn:active{transform:translateY(0);}
+.deco{color:#f0a8d0;font-size:13px;text-align:center;margin-top:1rem;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="kawaii">
+  <div class="header">
+    <div class="stars">✦ ✦ ✦</div>
+    <div class="title">Générateur de mot de passe<br>by Kenz 💜</div>
+    <div class="subtitle">✨ secure & kawaii ✨</div>
+  </div>
+
+  <div class="pw-display">
+    <span class="pw-text" id="pw-out">appuie sur générer 🌸</span>
+    <button class="copy-btn" id="copy-btn" onclick="copyPass()">📋 copier</button>
+  </div>
+
+  <div class="section">
+    <div class="label">🔒 Niveau de sécurité</div>
+    <div class="strength-bar-bg"><div class="strength-bar" id="sbar"></div></div>
+    <div class="strength-info">
+      <span id="slabel" style="color:#d980b8">—</span>
+      <span id="sscore" style="font-family:'Fredoka One',sans-serif;color:#d980b8">—</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="label">💫 Longueur : <span id="len-display" style="font-family:'Fredoka One',sans-serif;color:#c44d9a">12</span> caractères</div>
+    <div class="slider-row">
+      <span style="font-size:11px;color:#d980b8;font-weight:700">8</span>
+      <input type="range" id="len-slider" min="8" max="20" value="12" step="1" oninput="document.getElementById('len-display').textContent=this.value">
+      <span style="font-size:11px;color:#d980b8;font-weight:700">20</span>
+    </div>
+  </div>
+
+  <div class="label">🎀 Types de caractères</div>
+  <div class="options-grid">
+    <button class="opt-btn active" id="opt-lower" onclick="toggleOpt('lower')">
+      <span class="chk" id="chk-lower">♥</span> abc minuscules
+    </button>
+    <button class="opt-btn active" id="opt-upper" onclick="toggleOpt('upper')">
+      <span class="chk" id="chk-upper">♥</span> ABC majuscules
+    </button>
+    <button class="opt-btn active" id="opt-digits" onclick="toggleOpt('digits')">
+      <span class="chk" id="chk-digits">♥</span> 123 chiffres
+    </button>
+    <button class="opt-btn active" id="opt-symbols" onclick="toggleOpt('symbols')">
+      <span class="chk" id="chk-symbols">♥</span> !@# symboles
+    </button>
+  </div>
+
+  <div class="warn" id="warn">⚠ Sélectionne au moins un type !</div>
+
+  <button class="gen-btn" onclick="generatePass()">✨ Générer ✨</button>
+  <div class="deco">✦ made with love by kenz ✦</div>
+</div>
+
+<script>
+const CHARS={lower:'abcdefghijklmnopqrstuvwxyz',upper:'ABCDEFGHIJKLMNOPQRSTUVWXYZ',digits:'0123456789',symbols:'!@#$%^&*()-_=+[]{}|;:,.<>?'};
+let opts={lower:true,upper:true,digits:true,symbols:true};
+let currentPw='';
+
+function toggleOpt(k){
+  opts[k]=!opts[k];
+  const btn=document.getElementById('opt-'+k);
+  const chk=document.getElementById('chk-'+k);
+  if(opts[k]){btn.classList.add('active');chk.textContent='♥';}
+  else{btn.classList.remove('active');chk.textContent='';}
+  document.getElementById('warn').style.display=Object.values(opts).some(v=>v)?'none':'block';
+}
+
+function generatePass(){
+  if(!Object.values(opts).some(v=>v))return;
+  const len=parseInt(document.getElementById('len-slider').value);
+  let pool='',guaranteed=[];
+  for(const k in opts){if(opts[k]){pool+=CHARS[k];guaranteed.push(CHARS[k][Math.floor(Math.random()*CHARS[k].length)]);}}
+  const arr=new Uint32Array(len);
+  crypto.getRandomValues(arr);
+  let pw=[...guaranteed];
+  for(let i=guaranteed.length;i<len;i++)pw.push(pool[arr[i]%pool.length]);
+  for(let i=pw.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pw[i],pw[j]]=[pw[j],pw[i]];}
+  currentPw=pw.join('');
+  const el=document.getElementById('pw-out');
+  el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');
+  el.textContent=currentPw;
+  updateStrength(currentPw);
+  const cb=document.getElementById('copy-btn');cb.textContent='📋 copier';cb.classList.remove('copied');
+}
+
+function updateStrength(pw){
+  let score=0;
+  score+=Math.min(40,pw.length*2.5);
+  if(/[a-z]/.test(pw))score+=10;
+  if(/[A-Z]/.test(pw))score+=15;
+  if(/[0-9]/.test(pw))score+=15;
+  if(/[^a-zA-Z0-9]/.test(pw))score+=20;
+  score+=Math.min(10,new Set(pw).size*0.5);
+  score=Math.min(100,Math.round(score));
+  const bar=document.getElementById('sbar'),lbl=document.getElementById('slabel'),sc=document.getElementById('sscore');
+  bar.style.width=score+'%';
+  let col,txt;
+  if(score<35){col='#f87171';txt='faible 😟';}
+  else if(score<60){col='#fb923c';txt='modéré 🙂';}
+  else if(score<80){col='#a855f7';txt='fort 💜';}
+  else{col='#f472b6';txt='très fort 🌸';}
+  bar.style.background=col;lbl.textContent=txt;lbl.style.color=col;
+  sc.textContent='Score : '+score+'/100';sc.style.color=col;
+}
+
+function copyPass(){
+  if(!currentPw)return;
+  navigator.clipboard.writeText(currentPw).then(()=>{
+    const btn=document.getElementById('copy-btn');
+    btn.textContent='💜 copié !';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📋 copier';btn.classList.remove('copied');},2000);
+  });
+}
+</script>
+</body>
+</html>

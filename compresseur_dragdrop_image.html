@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compresseur d'images ✦ by Kenz</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#1a0a1e;font-family:'Nunito',sans-serif;color:#fdf4ff;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:30px 20px;}
+
+.header{text-align:center;margin-bottom:28px;}
+.stars{color:#ff6eb4;font-size:16px;letter-spacing:6px;margin-bottom:6px;}
+.title{font-family:'Fredoka One',sans-serif;font-size:2rem;color:#fdf4ff;letter-spacing:1px;}
+.subtitle{color:#c084fc;font-size:13px;margin-top:4px;}
+.tagline{color:#ff9dd4;font-size:11px;margin-top:3px;letter-spacing:2px;}
+
+.card{background:#2d1040;border:1px solid #7c3aed;border-radius:18px;padding:20px;width:100%;max-width:660px;margin-bottom:16px;}
+
+.card-title{font-size:12px;font-weight:800;color:#ff9dd4;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+
+.drop-zone{background:#1a0a1e;border:2px dashed #ff6eb4;border-radius:14px;padding:36px 20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
+.drop-zone.dragover{background:#2d1040;border-color:#ff9dd4;transform:scale(1.01);}
+.drop-zone:hover{border-color:#ff9dd4;}
+.drop-icon{font-size:36px;margin-bottom:10px;}
+.drop-text{color:#c4b5d4;font-size:14px;font-weight:600;}
+.drop-sub{color:#7c3aed;font-size:11px;margin-top:5px;}
+.drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+
+.file-list{margin-top:14px;display:flex;flex-direction:column;gap:6px;}
+.file-item{background:#1a0a1e;border:1px solid #3d1a55;border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;animation:fadein .2s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.file-name{font-size:12px;color:#fdf4ff;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;}
+.file-size{font-size:11px;color:#c084fc;white-space:nowrap;}
+.file-status{font-size:11px;font-weight:700;white-space:nowrap;}
+.file-status.ok{color:#34d399;}
+.file-status.wait{color:#c4b5d4;}
+.file-status.err{color:#f87171;}
+.remove-btn{background:none;border:none;color:#7c3aed;cursor:pointer;font-size:16px;padding:0 4px;line-height:1;transition:color .15s;}
+.remove-btn:hover{color:#ff6eb4;}
+
+.quality-row{display:flex;align-items:center;gap:12px;}
+.quality-row span{font-size:11px;color:#7c3aed;font-weight:700;min-width:20px;}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:6px;background:#1a0a1e;border-radius:10px;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:#ff6eb4;border-radius:50%;cursor:pointer;border:3px solid #2d1040;box-shadow:0 0 8px #ff6eb455;}
+.quality-label{font-size:13px;font-weight:800;color:#ff6eb4;margin-top:8px;}
+
+.format-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.format-btn{background:#1a0a1e;border:1px solid #3d1a55;color:#c4b5d4;padding:5px 14px;border-radius:20px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;transition:all .15s;}
+.format-btn.active{background:#7c3aed;border-color:#c084fc;color:#fdf4ff;}
+
+.progress-bar-bg{background:#1a0a1e;border-radius:10px;height:8px;overflow:hidden;margin-top:10px;display:none;}
+.progress-bar{height:100%;background:#ff6eb4;border-radius:10px;width:0%;transition:width .3s ease;}
+.progress-label{font-size:11px;color:#c4b5d4;margin-top:6px;display:none;}
+
+.btn-compress{width:100%;max-width:660px;background:#ff6eb4;border:none;color:#1a0a1e;padding:16px;font-family:'Fredoka One',sans-serif;font-size:17px;letter-spacing:2px;border-radius:16px;cursor:pointer;transition:all .2s;margin-bottom:12px;}
+.btn-compress:hover{background:#ff9dd4;transform:translateY(-2px);}
+.btn-compress:active{transform:translateY(0);}
+.btn-compress:disabled{background:#3d1a55;color:#7c3aed;cursor:not-allowed;transform:none;}
+
+.btn-clear{background:none;border:1px solid #3d1a55;color:#7c3aed;padding:4px 12px;border-radius:20px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;transition:all .15s;float:right;}
+.btn-clear:hover{border-color:#ff6eb4;color:#ff6eb4;}
+
+.result-box{background:#0d2218;border:1px solid #34d399;border-radius:14px;padding:14px 18px;width:100%;max-width:660px;margin-bottom:16px;display:none;}
+.result-title{font-size:12px;font-weight:800;color:#34d399;letter-spacing:1px;margin-bottom:10px;}
+.result-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;}
+.stat{background:#1a2e22;border-radius:10px;padding:10px;text-align:center;}
+.stat-val{font-family:'Fredoka One',sans-serif;font-size:18px;color:#34d399;}
+.stat-lbl{font-size:10px;color:#6ee7b7;margin-top:2px;}
+.dl-list{display:flex;flex-direction:column;gap:6px;}
+.dl-item{display:flex;align-items:center;justify-content:space-between;background:#1a2e22;border-radius:8px;padding:8px 12px;}
+.dl-name{font-size:11px;color:#fdf4ff;font-weight:600;}
+.dl-btn{background:#34d399;border:none;color:#0d2218;padding:4px 12px;border-radius:20px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;transition:all .15s;}
+.dl-btn:hover{background:#6ee7b7;}
+.dl-all{width:100%;background:#34d399;border:none;color:#0d2218;padding:10px;border-radius:10px;cursor:pointer;font-family:'Fredoka One',sans-serif;font-size:14px;margin-top:8px;transition:all .15s;}
+.dl-all:hover{background:#6ee7b7;}
+
+.footer{color:#3d1a55;font-size:11px;margin-top:8px;font-weight:600;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="stars">✦ ✦ ✦</div>
+  <div class="title">Compresseur d'images</div>
+  <div class="subtitle">by Kenz 💜</div>
+  <div class="tagline">✨ kawaii & moderne ✨</div>
+</div>
+
+<div class="card">
+  <div class="card-title">🌸 Images à compresser <button class="btn-clear" onclick="viderListe()">✕ vider</button></div>
+  <div class="drop-zone" id="dropZone">
+    <input type="file" id="fileInput" multiple accept="image/*" onchange="ajouterFichiers(this.files)">
+    <div class="drop-icon">🌸</div>
+    <div class="drop-text">Glisse tes images ici</div>
+    <div class="drop-sub">ou clique pour choisir • JPG, PNG, WEBP, BMP...</div>
+  </div>
+  <div class="file-list" id="fileList"></div>
+</div>
+
+<div class="card">
+  <div class="card-title">💫 Qualité de compression</div>
+  <div class="quality-row">
+    <span>1</span>
+    <input type="range" id="qualitySlider" min="1" max="100" value="75" oninput="majQualite()">
+    <span>100</span>
+  </div>
+  <div class="quality-label" id="qualityLabel">Qualité : 75/100 — Qualité équilibrée</div>
+
+  <div class="card-title" style="margin-top:16px">🎀 Format de sortie</div>
+  <div class="format-row" id="formatRow">
+    <button class="format-btn active" onclick="setFormat('jpeg',this)">JPEG</button>
+    <button class="format-btn" onclick="setFormat('webp',this)">WEBP</button>
+    <button class="format-btn" onclick="setFormat('png',this)">PNG</button>
+  </div>
+</div>
+
+<div class="progress-bar-bg" id="progressBg">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+<div class="progress-label" id="progressLabel"></div>
+
+<button class="btn-compress" id="btnCompress" onclick="compresser()">✨  Compresser  ✨</button>
+
+<div class="result-box" id="resultBox">
+  <div class="result-title">💜 Résultat</div>
+  <div class="result-stats">
+    <div class="stat"><div class="stat-val" id="statAvant">—</div><div class="stat-lbl">Taille avant</div></div>
+    <div class="stat"><div class="stat-val" id="statApres">—</div><div class="stat-lbl">Taille après</div></div>
+    <div class="stat"><div class="stat-val" id="statGain">—</div><div class="stat-lbl">Gain</div></div>
+  </div>
+  <div class="dl-list" id="dlList"></div>
+  <button class="dl-all" id="dlAll" onclick="toutTelecharger()">⬇ Tout télécharger</button>
+</div>
+
+<div class="footer">✦ made with love by kenz ✦</div>
+
+<script>
+let fichiers = [];
+let formatSortie = 'jpeg';
+let resultats = [];
+
+const dropZone = document.getElementById('dropZone');
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  ajouterFichiers(e.dataTransfer.files);
+});
+
+function ajouterFichiers(files) {
+  for (const f of files) {
+    if (!f.type.startsWith('image/')) continue;
+    if (fichiers.find(x => x.name === f.name && x.size === f.size)) continue;
+    fichiers.push(f);
+  }
+  renderListe();
+}
+
+function renderListe() {
+  const list = document.getElementById('fileList');
+  list.innerHTML = '';
+  fichiers.forEach((f, i) => {
+    const el = document.createElement('div');
+    el.className = 'file-item';
+    el.innerHTML = `
+      <span class="file-name">🖼 ${f.name}</span>
+      <span class="file-size">${tailleListable(f.size)}</span>
+      <span class="file-status wait" id="status-${i}">en attente</span>
+      <button class="remove-btn" onclick="supprimerFichier(${i})">✕</button>
+    `;
+    list.appendChild(el);
+  });
+  if (fichiers.length > 0) {
+    dropZone.querySelector('.drop-text').textContent = `🌸  ${fichiers.length} image(s) sélectionnée(s)`;
+  }
+}
+
+function supprimerFichier(i) {
+  fichiers.splice(i, 1);
+  renderListe();
+}
+
+function viderListe() {
+  fichiers = [];
+  resultats = [];
+  renderListe();
+  document.getElementById('resultBox').style.display = 'none';
+  document.getElementById('progressBg').style.display = 'none';
+  document.getElementById('progressLabel').style.display = 'none';
+  dropZone.querySelector('.drop-text').textContent = 'Glisse tes images ici';
+}
+
+function majQualite() {
+  const q = parseInt(document.getElementById('qualitySlider').value);
+  let desc = q < 30 ? 'Compression maximale' : q < 60 ? 'Bonne compression' : q < 80 ? 'Qualité équilibrée' : 'Haute qualité';
+  document.getElementById('qualityLabel').textContent = `Qualité : ${q}/100 — ${desc}`;
+}
+
+function setFormat(fmt, btn) {
+  formatSortie = fmt;
+  document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function tailleListable(o) {
+  if (o < 1024) return o + ' o';
+  if (o < 1024*1024) return (o/1024).toFixed(1) + ' Ko';
+  return (o/1024/1024).toFixed(1) + ' Mo';
+}
+
+async function compresserImage(file, qualite, format) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+      const mimeType = format === 'png' ? 'image/png' : format === 'webp' ? 'image/webp' : 'image/jpeg';
+      const q = format === 'png' ? undefined : qualite / 100;
+      canvas.toBlob(blob => resolve(blob), mimeType, q);
+    };
+    img.src = url;
+  });
+}
+
+async function compresser() {
+  if (fichiers.length === 0) { alert('Ajoute d\'abord des images 🌸'); return; }
+  const btn = document.getElementById('btnCompress');
+  btn.disabled = true;
+  btn.textContent = '⏳  Compression...';
+  resultats = [];
+
+  const progBg  = document.getElementById('progressBg');
+  const progBar = document.getElementById('progressBar');
+  const progLbl = document.getElementById('progressLabel');
+  progBg.style.display = 'block';
+  progLbl.style.display = 'block';
+
+  const qualite = parseInt(document.getElementById('qualitySlider').value);
+  let avTot = 0, apTot = 0;
+
+  for (let i = 0; i < fichiers.length; i++) {
+    const f = fichiers[i];
+    progLbl.textContent = `⏳  Compression de ${f.name}...`;
+    progBar.style.width = ((i / fichiers.length) * 100) + '%';
+    document.getElementById(`status-${i}`).textContent = '⏳';
+    document.getElementById(`status-${i}`).className = 'file-status wait';
+
+    try {
+      const blob = await compresserImage(f, qualite, formatSortie);
+      const ext = formatSortie === 'jpeg' ? 'jpg' : formatSortie;
+      const nomSortie = f.name.replace(/\.[^.]+$/, '') + '_compressed.' + ext;
+      resultats.push({ nom: nomSortie, blob, avant: f.size, apres: blob.size });
+      avTot += f.size; apTot += blob.size;
+      document.getElementById(`status-${i}`).textContent = `✓ ${tailleListable(blob.size)}`;
+      document.getElementById(`status-${i}`).className = 'file-status ok';
+    } catch(e) {
+      document.getElementById(`status-${i}`).textContent = '✗ erreur';
+      document.getElementById(`status-${i}`).className = 'file-status err';
+    }
+  }
+
+  progBar.style.width = '100%';
+  progLbl.textContent = `✓ Terminé ! ${resultats.length}/${fichiers.length} images compressées`;
+
+  const gain = avTot > 0 ? Math.round((1 - apTot / avTot) * 100) : 0;
+  document.getElementById('statAvant').textContent = tailleListable(avTot);
+  document.getElementById('statApres').textContent = tailleListable(apTot);
+  document.getElementById('statGain').textContent  = `-${gain}%`;
+
+  const dlList = document.getElementById('dlList');
+  dlList.innerHTML = '';
+  resultats.forEach(r => {
+    const el = document.createElement('div');
+    el.className = 'dl-item';
+    el.innerHTML = `
+      <span class="dl-name">🖼 ${r.nom}</span>
+      <span style="font-size:11px;color:#6ee7b7">${tailleListable(r.avant)} → ${tailleListable(r.apres)}</span>
+      <button class="dl-btn" onclick="telecharger('${r.nom}')">⬇ Télécharger</button>
+    `;
+    dlList.appendChild(el);
+  });
+
+  document.getElementById('resultBox').style.display = 'block';
+  btn.disabled = false;
+  btn.textContent = '✨  Compresser  ✨';
+}
+
+function telecharger(nom) {
+  const r = resultats.find(x => x.nom === nom);
+  if (!r) return;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(r.blob);
+  a.download = r.nom;
+  a.click();
+}
+
+function toutTelecharger() {
+  resultats.forEach(r => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(r.blob);
+    a.download = r.nom;
+    a.click();
+  });
+}
+</script>
+</body>
+</html>
