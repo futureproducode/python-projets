@@ -11,6 +11,8 @@ Trois utilitaires de bureau développés en Python, chacun décliné en **applic
 Chaque projet a son propre README détaillé :
 [images](README_compresseur_image.md) · [PDF](README_compresseur_pdf.md) · [mots de passe](README_generateur_mot_de_passe.md)
 
+Les corrections et évolutions sont retracées dans le [journal des modifications](CHANGELOG.md).
+
 ---
 
 ## Démarrage rapide
