@@ -11,7 +11,7 @@ except ImportError:
     DND_DISPONIBLE = False
 
 # ─────────────────────────────────────────────
-#  COMPRESSEUR DE PDFs - Interface kawaii
+#  COMPRESSEUR DE PDFs - Interface graphique
 #  by Kenz 💜
 # ─────────────────────────────────────────────
 
@@ -87,7 +87,6 @@ class AppCompresseurPDF:
         self._lbl(header, "✦  ✦  ✦", fg=C["rose"], bg=C["panneau"], font=("Segoe UI", 10)).pack()
         self._lbl(header, "Compresseur de PDFs", fg=C["texte"], bg=C["panneau"], font=FONT_TITRE).pack()
         self._lbl(header, "by Kenz  💜", fg=C["violet"], bg=C["panneau"], font=("Segoe UI", 11)).pack()
-        self._lbl(header, "✨  kawaii & moderne  ✨", fg=C["rose_clair"], bg=C["panneau"], font=("Segoe UI", 9)).pack(pady=(2,0))
 
         body = tk.Frame(self.root, bg=C["fond"])
         body.pack(fill="both", expand=True, padx=30, pady=16)

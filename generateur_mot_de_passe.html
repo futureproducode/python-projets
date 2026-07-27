@@ -5,19 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Générateur de mot de passe by Kenz</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:#fce4f3;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Nunito',sans-serif;}
-.kawaii{background:#fdf0f8;border-radius:24px;border:2px solid #f0a8d0;padding:2rem;width:460px;color:#7b2d6e;}
+body{background:#fce4f3;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Nunito',system-ui,'Segoe UI',sans-serif;}
+.carte{background:#fdf0f8;border-radius:24px;border:2px solid #f0a8d0;padding:2rem;width:460px;color:#7b2d6e;}
 .header{text-align:center;margin-bottom:1.5rem;}
 .stars{color:#e891c8;font-size:18px;letter-spacing:4px;margin-bottom:4px;}
-.title{font-family:'Fredoka One',sans-serif;font-size:1.5rem;color:#c44d9a;letter-spacing:1px;line-height:1.3;}
+.title{font-family:'Fredoka One','Segoe UI',system-ui,sans-serif;font-size:1.5rem;color:#c44d9a;letter-spacing:1px;line-height:1.3;}
 .subtitle{font-size:11px;color:#d980b8;letter-spacing:2px;margin-top:4px;}
 .pw-display{background:#fff0fa;border:2px solid #f0a8d0;border-radius:16px;padding:1rem 1.2rem;margin-bottom:1.2rem;min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.pw-text{font-family:'Nunito',sans-serif;font-size:1rem;color:#a0307a;word-break:break-all;flex:1;font-weight:700;letter-spacing:2px;}
+.pw-text{font-family:'Nunito',system-ui,'Segoe UI',sans-serif;font-size:1rem;color:#a0307a;word-break:break-all;flex:1;font-weight:700;letter-spacing:2px;}
 .pw-text.flash{animation:pop .2s ease;}
 @keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
-.copy-btn{background:#f472b6;border:none;color:#fff;padding:8px 14px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;border-radius:20px;white-space:nowrap;transition:all .15s;}
+.copy-btn{background:#f472b6;border:none;color:#fff;padding:8px 14px;cursor:pointer;font-family:'Nunito',system-ui,'Segoe UI',sans-serif;font-size:12px;font-weight:700;border-radius:20px;white-space:nowrap;transition:all .15s;}
 .copy-btn:hover{background:#ec4899;transform:scale(1.05);}
 .copy-btn.copied{background:#a855f7;}
 .section{margin-bottom:1rem;}
@@ -26,7 +25,7 @@ body{background:#fce4f3;display:flex;justify-content:center;align-items:center;m
 input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:6px;background:#f9d0ea;border-radius:10px;outline:none;border:none;}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:#f472b6;border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px #f472b655;}
 .options-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem;}
-.opt-btn{background:#fff0fa;border:2px solid #f9d0ea;color:#c44d9a;padding:10px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;border-radius:14px;display:flex;align-items:center;gap:8px;transition:all .15s;text-align:left;}
+.opt-btn{background:#fff0fa;border:2px solid #f9d0ea;color:#c44d9a;padding:10px;cursor:pointer;font-family:'Nunito',system-ui,'Segoe UI',sans-serif;font-size:12px;font-weight:700;border-radius:14px;display:flex;align-items:center;gap:8px;transition:all .15s;text-align:left;}
 .opt-btn.active{background:#fce7f3;border-color:#f472b6;color:#a0307a;}
 .opt-btn:hover{transform:translateY(-1px);}
 .chk{width:16px;height:16px;border:2px solid #f0a8d0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;background:#fff;transition:all .15s;}
@@ -35,14 +34,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 .strength-bar{height:100%;border-radius:10px;transition:width .4s ease,background .4s ease;width:0%;}
 .strength-info{display:flex;justify-content:space-between;margin-bottom:1.2rem;font-size:11px;font-weight:700;}
 .warn{color:#e879a0;font-size:11px;margin-bottom:8px;font-weight:700;display:none;}
-.gen-btn{width:100%;background:#f472b6;border:none;color:#fff;padding:14px;cursor:pointer;font-family:'Fredoka One',sans-serif;font-size:16px;letter-spacing:2px;border-radius:20px;transition:all .2s;box-shadow:0 4px 14px #f472b644;}
+.gen-btn{width:100%;background:#f472b6;border:none;color:#fff;padding:14px;cursor:pointer;font-family:'Fredoka One','Segoe UI',system-ui,sans-serif;font-size:16px;letter-spacing:2px;border-radius:20px;transition:all .2s;box-shadow:0 4px 14px #f472b644;}
 .gen-btn:hover{background:#ec4899;transform:translateY(-2px);box-shadow:0 6px 20px #f472b666;}
 .gen-btn:active{transform:translateY(0);}
 .deco{color:#f0a8d0;font-size:13px;text-align:center;margin-top:1rem;font-weight:600;}
 </style>
 </head>
 <body>
-<div class="kawaii">
+<div class="carte">
   <div class="header">
     <div class="stars">✦ ✦ ✦</div>
     <div class="title">Générateur de mot de passe<br>by Kenz 💜</div>
@@ -59,12 +58,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
     <div class="strength-bar-bg"><div class="strength-bar" id="sbar"></div></div>
     <div class="strength-info">
       <span id="slabel" style="color:#d980b8">—</span>
-      <span id="sscore" style="font-family:'Fredoka One',sans-serif;color:#d980b8">—</span>
+      <span id="sscore" style="font-family:'Fredoka One','Segoe UI',system-ui,sans-serif;color:#d980b8">—</span>
     </div>
   </div>
 
   <div class="section">
-    <div class="label">💫 Longueur : <span id="len-display" style="font-family:'Fredoka One',sans-serif;color:#c44d9a">12</span> caractères</div>
+    <div class="label">💫 Longueur : <span id="len-display" style="font-family:'Fredoka One','Segoe UI',system-ui,sans-serif;color:#c44d9a">12</span> caractères</div>
     <div class="slider-row">
       <span style="font-size:11px;color:#d980b8;font-weight:700">8</span>
       <input type="range" id="len-slider" min="8" max="20" value="12" step="1" oninput="document.getElementById('len-display').textContent=this.value">

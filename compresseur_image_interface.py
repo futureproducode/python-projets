@@ -11,11 +11,11 @@ except ImportError:
     DND_DISPONIBLE = False
 
 # ─────────────────────────────────────────────
-#  COMPRESSEUR D'IMAGES - Interface Kawaii Moderne
+#  COMPRESSEUR D'IMAGES - Interface graphique
 #  by Kenz 💜
 # ─────────────────────────────────────────────
 
-# Palette kawaii
+# Palette de couleurs
 C = {
     "fond":         "#1a0a1e",
     "panneau":      "#2d1040",
@@ -34,7 +34,7 @@ C = {
 
 FORMATS = (".jpg", ".jpeg", ".png", ".bmp", ".webp", ".tiff")
 
-# Police kawaii: on utilise les polices système les plus douces disponibles
+# Polices : on utilise les polices système les plus douces disponibles
 FONT_TITRE  = ("Segoe UI", 18, "bold")
 FONT_SOUS   = ("Segoe UI", 10)
 FONT_LABEL  = ("Segoe UI", 10, "bold")
@@ -116,8 +116,6 @@ class AppCompresseur:
                     font=("Segoe UI", 22, "bold")).pack()
         self._label(header, "by Kenz  💜", fg=C["violet"], bg=C["panneau"],
                     font=("Segoe UI", 11)).pack()
-        self._label(header, "✨  kawaii & moderne  ✨", fg=C["rose_clair"], bg=C["panneau"],
-                    font=("Segoe UI", 9)).pack(pady=(2, 0))
 
         # ── Corps ──────────────────────────────────────────────
         body = tk.Frame(self.root, bg=C["fond"])
@@ -200,14 +198,14 @@ class AppCompresseur:
         self.qualite_var = tk.IntVar(value=75)
         style = ttk.Style()
         style.theme_use("default")
-        style.configure("Kawaii.Horizontal.TScale",
+        style.configure("Doux.Horizontal.TScale",
                         background=C["card"],
                         troughcolor=C["panneau"],
                         sliderlength=22)
         self.slider = ttk.Scale(slider_row, from_=1, to=100,
                                 variable=self.qualite_var,
                                 orient="horizontal",
-                                style="Kawaii.Horizontal.TScale",
+                                style="Doux.Horizontal.TScale",
                                 command=self._maj_qualite)
         self.slider.pack(side="left", fill="x", expand=True, padx=8)
         self._label(slider_row, "100", fg=C["texte_dim"], bg=C["card"],
@@ -222,12 +220,12 @@ class AppCompresseur:
         cadre_prog = tk.Frame(body, bg=C["fond"])
         cadre_prog.pack(fill="x", pady=(0, 6))
 
-        style.configure("Kawaii.Horizontal.TProgressbar",
+        style.configure("Doux.Horizontal.TProgressbar",
                         troughcolor=C["panneau"],
                         background=C["rose"],
                         thickness=8)
         self.progress = ttk.Progressbar(cadre_prog, mode="determinate",
-                                         style="Kawaii.Horizontal.TProgressbar")
+                                         style="Doux.Horizontal.TProgressbar")
         self.progress.pack(fill="x")
 
         self.label_statut = self._label(cadre_prog, "",

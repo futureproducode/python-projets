@@ -1,0 +1,12 @@
+# Dépendances des versions Python
+# Installation : pip install -r requirements.txt
+
+Pillow>=10.0.0        # compresseur d'images
+pypdf>=4.0.0          # compresseur de PDF
+
+# Optionnel : active le glisser-déposer dans les deux compresseurs.
+# Sans lui, les applications fonctionnent, seul le glisser-déposer est désactivé.
+tkinterdnd2>=0.3.0
+
+# Le générateur de mot de passe n'a aucune dépendance :
+# il n'utilise que la bibliothèque standard de Python.

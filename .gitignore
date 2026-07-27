@@ -1,0 +1,22 @@
+# Fichiers générés par Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environnements virtuels
+.venv/
+venv/
+env/
+
+# Dossiers de sortie créés par les compresseurs
+compressees/
+compresses/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeurs
+.vscode/
+.idea/

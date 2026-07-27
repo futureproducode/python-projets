@@ -5,15 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Compresseur d'images ✦ by Kenz</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:#1a0a1e;font-family:'Nunito',sans-serif;color:#fdf4ff;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:30px 20px;}
+body{background:#1a0a1e;font-family:'Nunito',system-ui,'Segoe UI',sans-serif;color:#fdf4ff;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:30px 20px;}
 
 .header{text-align:center;margin-bottom:28px;}
 .stars{color:#ff6eb4;font-size:16px;letter-spacing:6px;margin-bottom:6px;}
-.title{font-family:'Fredoka One',sans-serif;font-size:2rem;color:#fdf4ff;letter-spacing:1px;}
+.title{font-family:'Fredoka One','Segoe UI',system-ui,sans-serif;font-size:2rem;color:#fdf4ff;letter-spacing:1px;}
 .subtitle{color:#c084fc;font-size:13px;margin-top:4px;}
-.tagline{color:#ff9dd4;font-size:11px;margin-top:3px;letter-spacing:2px;}
 
 .card{background:#2d1040;border:1px solid #7c3aed;border-radius:18px;padding:20px;width:100%;max-width:660px;margin-bottom:16px;}
 
@@ -46,33 +44,33 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 .quality-label{font-size:13px;font-weight:800;color:#ff6eb4;margin-top:8px;}
 
 .format-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
-.format-btn{background:#1a0a1e;border:1px solid #3d1a55;color:#c4b5d4;padding:5px 14px;border-radius:20px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;transition:all .15s;}
+.format-btn{background:#1a0a1e;border:1px solid #3d1a55;color:#c4b5d4;padding:5px 14px;border-radius:20px;cursor:pointer;font-family:'Nunito',system-ui,'Segoe UI',sans-serif;font-size:11px;font-weight:700;transition:all .15s;}
 .format-btn.active{background:#7c3aed;border-color:#c084fc;color:#fdf4ff;}
 
 .progress-bar-bg{background:#1a0a1e;border-radius:10px;height:8px;overflow:hidden;margin-top:10px;display:none;}
 .progress-bar{height:100%;background:#ff6eb4;border-radius:10px;width:0%;transition:width .3s ease;}
 .progress-label{font-size:11px;color:#c4b5d4;margin-top:6px;display:none;}
 
-.btn-compress{width:100%;max-width:660px;background:#ff6eb4;border:none;color:#1a0a1e;padding:16px;font-family:'Fredoka One',sans-serif;font-size:17px;letter-spacing:2px;border-radius:16px;cursor:pointer;transition:all .2s;margin-bottom:12px;}
+.btn-compress{width:100%;max-width:660px;background:#ff6eb4;border:none;color:#1a0a1e;padding:16px;font-family:'Fredoka One','Segoe UI',system-ui,sans-serif;font-size:17px;letter-spacing:2px;border-radius:16px;cursor:pointer;transition:all .2s;margin-bottom:12px;}
 .btn-compress:hover{background:#ff9dd4;transform:translateY(-2px);}
 .btn-compress:active{transform:translateY(0);}
 .btn-compress:disabled{background:#3d1a55;color:#7c3aed;cursor:not-allowed;transform:none;}
 
-.btn-clear{background:none;border:1px solid #3d1a55;color:#7c3aed;padding:4px 12px;border-radius:20px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;transition:all .15s;float:right;}
+.btn-clear{background:none;border:1px solid #3d1a55;color:#7c3aed;padding:4px 12px;border-radius:20px;cursor:pointer;font-family:'Nunito',system-ui,'Segoe UI',sans-serif;font-size:11px;font-weight:700;transition:all .15s;float:right;}
 .btn-clear:hover{border-color:#ff6eb4;color:#ff6eb4;}
 
 .result-box{background:#0d2218;border:1px solid #34d399;border-radius:14px;padding:14px 18px;width:100%;max-width:660px;margin-bottom:16px;display:none;}
 .result-title{font-size:12px;font-weight:800;color:#34d399;letter-spacing:1px;margin-bottom:10px;}
 .result-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;}
 .stat{background:#1a2e22;border-radius:10px;padding:10px;text-align:center;}
-.stat-val{font-family:'Fredoka One',sans-serif;font-size:18px;color:#34d399;}
+.stat-val{font-family:'Fredoka One','Segoe UI',system-ui,sans-serif;font-size:18px;color:#34d399;}
 .stat-lbl{font-size:10px;color:#6ee7b7;margin-top:2px;}
 .dl-list{display:flex;flex-direction:column;gap:6px;}
 .dl-item{display:flex;align-items:center;justify-content:space-between;background:#1a2e22;border-radius:8px;padding:8px 12px;}
 .dl-name{font-size:11px;color:#fdf4ff;font-weight:600;}
-.dl-btn{background:#34d399;border:none;color:#0d2218;padding:4px 12px;border-radius:20px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;transition:all .15s;}
+.dl-btn{background:#34d399;border:none;color:#0d2218;padding:4px 12px;border-radius:20px;cursor:pointer;font-family:'Nunito',system-ui,'Segoe UI',sans-serif;font-size:11px;font-weight:800;transition:all .15s;}
 .dl-btn:hover{background:#6ee7b7;}
-.dl-all{width:100%;background:#34d399;border:none;color:#0d2218;padding:10px;border-radius:10px;cursor:pointer;font-family:'Fredoka One',sans-serif;font-size:14px;margin-top:8px;transition:all .15s;}
+.dl-all{width:100%;background:#34d399;border:none;color:#0d2218;padding:10px;border-radius:10px;cursor:pointer;font-family:'Fredoka One','Segoe UI',system-ui,sans-serif;font-size:14px;margin-top:8px;transition:all .15s;}
 .dl-all:hover{background:#6ee7b7;}
 
 .footer{color:#3d1a55;font-size:11px;margin-top:8px;font-weight:600;}
@@ -84,7 +82,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
   <div class="stars">✦ ✦ ✦</div>
   <div class="title">Compresseur d'images</div>
   <div class="subtitle">by Kenz 💜</div>
-  <div class="tagline">✨ kawaii & moderne ✨</div>
 </div>
 
 <div class="card">
