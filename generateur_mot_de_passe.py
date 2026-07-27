@@ -1,6 +1,5 @@
 import secrets
 import string
-import pyperclip  # pip install pyperclip
 
 # ─────────────────────────────────────────────
 #  GÉNÉRATEUR DE MOT DE PASSE SÉCURISÉ
@@ -130,14 +129,6 @@ def generer_mot_de_passe(longueur: int, options: dict) -> str:
     return "".join(tous)
 
 
-def copier_dans_presse_papiers(mot_de_passe: str):
-    try:
-        pyperclip.copy(mot_de_passe)
-        print(f"  {VERT}✓  Copié dans le presse-papiers !{RESET}")
-    except Exception:
-        print(f"  {ORANGE}⚠  Impossible de copier (installez pyperclip : pip install pyperclip){RESET}")
-
-
 def main():
     afficher_banniere()
 
@@ -158,11 +149,6 @@ def main():
         print(f"\n{GRIS}┌─ Force du mot de passe ────────────────────{RESET}")
         afficher_barre_force(score, couleur)
         print(f"  {couleur}{GRAS}{label}{RESET}\n")
-
-        # ── Copier ────────────────────────────────
-        copier = input(f"  {GRIS}Copier dans le presse-papiers ? (O/n) :{RESET} ").strip().upper()
-        if copier != "N":
-            copier_dans_presse_papiers(mot_de_passe)
 
         # ── Continuer ? ───────────────────────────
         print()
